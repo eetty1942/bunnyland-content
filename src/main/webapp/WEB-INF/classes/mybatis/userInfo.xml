@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="userInfoSql">
+  	<!-- 사용자 리스트 불러오기 -->
+  	<select id="selectUser" resultType="UserInfoDto">
+  		SELECT DEVICENUMBER, PUSHALARM
+  		FROM USERINFO 
+  	</select>
+  
+  	<!-- 사용자 정보 등록 -->
+  	<insert id="insertUser" parameterType="UserInfoDto">
+  		INSERT INTO USERINFO (DEVICENUMBER, PUSHALARM)
+  		VALUES(#{deviceNumber}, 1)
+  	</insert>
+  
+  	<!-- 사용자 정보 수정 -->
+  	<update id="updateUser" parameterType="UserInfoDto">
+  		UPDATE USERINFO
+        SET DEVICENUMBER = #{deviceNumber},
+        	PUSHALARM = #{pushAlarm}
+        WEHRE DEVICENUMBER = #{daviceNumber}
+  	</update>
+  	<!-- 사용자 장보 삭제 -->
+  	<delete id="deleteUser" parameterType="int">
+  		DELETE USERINFO WHERE DEVICENUMBER = #{deviceNumber}
+  	</delete>
+  </mapper>

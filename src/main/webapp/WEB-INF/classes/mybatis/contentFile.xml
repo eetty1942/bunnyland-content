@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="contentFileSql">
+	<!-- 컨텐츠 상세 SELECT -->
+	<select id="selectContentFileDetail" parameterType="int" resultType="ContentFileDto">
+		SELECT fileNumber, fileName, filePath, fileSize, fileType, content_contentNumber
+		FROM contentFile
+		WHERE content_contentNumber = #{content_contentNumber}
+	</select>
+	
+	<!-- 컨텐츠 목록 SELECT -->
+	<select id="selectContentFileList" resultType="ContentFileDto">
+		SELECT fileNumber, fileName, filePath, fileSize, fileType, content_contentNumber
+		FROM contentFile
+	</select>
+
+	<!-- 컨텐츠 리스트 SELECT -->
+	<select id="selectContentFile" parameterType="int" resultType="ContentFileDto">
+		SELECT fileNumber, fileName, filePath, fileSize, fileType, content_contentNumber
+		FROM contentFile
+		WHERE content_contentNumber = #{content_contentNumber}
+	</select>
+	
+	<!-- 컨텐츠 썸네일 이미지 SELECT -->
+	<select id="selectThumbnail" parameterType="String" resultType="ContentFileDto">
+		SELECT fileNumber, fileName, filePath, fileSize, fileType, content_contentNumber
+		FROM contentFile
+		WHERE contentType = #{contentType}
+	</select>
+	
+	
+
+	<!-- 컨텐츠 등록 -->
+	<insert id="insertContentFile" parameterType="ContentFileDto">
+		INSERT INTO contentFile (fileName, filePath, fileSize, fileType, content_contentNumber)
+		VALUES(#{fileName}, #{filePath}, #{fileSize},
+		#{fileType}, ${content_contentNumber})
+	</insert>
+
+	<!-- 컨텐츠 수정 -->
+	<update id="updateContentFile" parameterType="ContentFileDto">
+		UPDATE contentFile
+		SET fileName = #{fileName},
+			filePath = #{filePath},
+			fileType = #{fileType},
+			fileSize = #{fileSize},
+		WHERE content_contentNumber = #{content_contentNumber}
+	</update>
+
+	<!-- 컨텐츠 삭제 -->
+	<delete id="deleteContentFile" parameterType="int">
+		DELETE FROM contentFile WHERE content_contentNumber = #{content_contentNumber}
+	</delete>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="pushLogSql">
+  	
+  	<!-- 푸시로그 불러오기 -->
+  	<select id="selectPushLog" resultType="PushLogDto">
+  		SELECT logNumber, pushDescription, url, pushKind, pushDate, managerInfo_managerNumber
+  		FROM pushLog
+  	</select>
+  	
+  	<!-- 신규 푸시로그 불러오기 -->
+  	<select id="selectNewPushLog" resultType="PushLogDto">
+  		SELECT logNumber, pushDescription, pushKind, pushDate, managerInfo_managerNumber
+  		FROM pushLog
+  		WHERE pushKind = "신규" 
+  	</select>
+  	
+  	<!-- 이벤트 푸시로그 불러오기 -->
+  	<select id="selectEventPushLog" resultType="PushLogDto">
+  		SELECT logNumber, url, pushDescription, pushKind, pushDate, managerInfo_managerNumber
+  		FROM pushLog
+  		WHERE pushKind = "이벤트" 
+  	</select>
+  	
+  	<!-- 프로모션 푸시로그 불러오기 -->
+  	<select id="selectPromotionPushLog" resultType="PushLogDto">
+  		SELECT logNumber, url, pushDescription, pushKind, pushDate, managerInfo_managerNumber
+  		FROM pushLog
+  		WHERE pushKind = "프로모션" 
+  	</select>
+  	
+  	<!-- 푸시 로그 기록 -->
+  	<insert id="insertPushLog" parameterType="PushLogDto">
+  		INSERT INTO pushLog (logNumber, pushDescription, url, pushKind, pushDate, managerInfo_managerNumber)
+  		VALUES(#{pushDescription}, #{url}, #{pushKind}, SYSDATE, #{managerInfo_managerNumber})
+  	</insert>
+  	
+  	<!-- 푸시 로그 삭제 -->
+  	<delete id="deletePushLog" parameterType="int">
+  		DELETE pushLog WHERE logNumber = # {logNumber}
+  	</delete>
+  	
+  </mapper>

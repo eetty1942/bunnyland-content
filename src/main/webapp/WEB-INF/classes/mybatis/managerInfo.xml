@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="managerInfoSql">
+  	<!-- 관리자 리스트 SELECT -->
+    <select id="selectManager" parameterType="ManagerInfoDto" resultType="ManagerInfoDto">
+        SELECT managerNumber, id, password, name, jobRank, registDate, modifyDate
+        FROM managerInfo
+        WHERE id = #{id} 
+    </select>
+    
+    <!-- 관리자 등록 -->
+    <insert id="insertManager" parameterType="ManagerInfoDto">
+        INSERT INTO managerInfo (id, password, name, jobRank, registDate, modifyDate)
+		VALUES(#{id}, #{password}, #{jobRank}, SYSDATE, SYSDATE)
+    </insert>
+    
+    <!-- 관리자 수정 -->
+    <update id="updateManager" parameterType="ManagerInfoDto">
+        UPDATE managerInfo
+        SET password = #{password},
+        	jobRank = #{jobRank},
+        	modifyDate = SYSDATE
+        WEHRE managerNumber = #{managerNumber}
+    </update>
+    
+    <!-- 관리자 삭제 -->
+    <delete id="deleteManager" parameterType="int">
+        DELETE managerNumber WHERE managerNumber = #{managerNumber}
+    </delete>
+    
+</mapper>
